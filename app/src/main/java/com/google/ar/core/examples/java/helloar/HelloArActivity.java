@@ -16,6 +16,10 @@
 
 package com.google.ar.core.examples.java.helloar;
 
+//--------//
+import android.widget.TextView;
+//--------//
+
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -63,6 +67,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.Renderer {
   private static final String TAG = HelloArActivity.class.getSimpleName();
+  //printf(release());
 
   // Rendering. The Renderers are created here, and initialized when the GL surface is created.
   private GLSurfaceView surfaceView;
@@ -103,6 +108,17 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
     setContentView(R.layout.activity_main);
     surfaceView = findViewById(R.id.surfaceview);
     displayRotationHelper = new DisplayRotationHelper(/*context=*/ this);
+
+//    //--------FIND VALUE--------//
+//    Frame frameMINE = session.update();
+//    PointCloud pointCloudMINE = frameMINE.acquirePointCloud();
+//    long myValue = pointCloudMINE.getTimestamp();
+//    String message =
+//            myValue == -1 ?
+//                    "The value is invalid." :
+//                    "The value is " + myValue;
+//    TextView tv = (TextView) findViewById(R.id.distanceDisplay);
+//    tv.setText(message);
 
     // Set up tap listener.
     tapHelper = new TapHelper(/*context=*/ this);
@@ -300,6 +316,18 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
       PointCloud pointCloud = frame.acquirePointCloud();
       pointCloudRenderer.update(pointCloud);
       pointCloudRenderer.draw(viewmtx, projmtx);
+
+      //--------FIND VALUE--------// ------------------------------------------
+      Frame frameMINE = session.update();
+      PointCloud pointCloudMINE = frameMINE.acquirePointCloud();
+      long myValue = pointCloudMINE.getTimestamp();
+      String message =
+              myValue == -1 ?
+                      "The value is invalid." :
+                      "The value is " + myValue;
+      TextView tv = (TextView) findViewById(R.id.distanceDisplay);
+      tv.setText(message);
+
 
       // Application is responsible for releasing the point cloud resources after
       // using it.
