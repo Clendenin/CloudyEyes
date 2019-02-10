@@ -18,6 +18,7 @@ package com.google.ar.core.examples.java.helloar;
 
 //--------//
 import android.widget.TextView;
+import java.nio.*;
 //--------//
 
 import android.opengl.GLES20;
@@ -320,11 +321,13 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
       //--------FIND VALUE--------// ------------------------------------------
       Frame frameMINE = session.update();
       PointCloud pointCloudMINE = frameMINE.acquirePointCloud();
-      long myValue = pointCloudMINE.getTimestamp();
+      FloatBuffer bufferPoints = pointCloudMINE.getPoints();
+      //FloatBuffer bufferPoints = pointCloudMine.getPoints();
+      long myValue = (long) bufferPoints.get(100);
       String message =
               myValue == -1 ?
                       "The value is invalid." :
-                      "The value is " + myValue;
+                      "The value is " + (int) bufferPoints.get(400);
       TextView tv = (TextView) findViewById(R.id.distanceDisplay);
       tv.setText(message);
 
