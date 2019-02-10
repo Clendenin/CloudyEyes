@@ -329,6 +329,12 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
               myValue == -1 ?
                       "The value is invalid." :
                       "The value is " + bufferPoints.get(100) + " / " + bufferPoints.get(101) + " / " + bufferPoints.get(102);
+      int avgX = (int) (100 *(bufferPoints.get(100) + bufferPoints.get(104) + bufferPoints.get(108))) / 3;
+      int avgY = (int) (100 *(bufferPoints.get(101) + bufferPoints.get(105) + bufferPoints.get(109))) / 3;
+      int avgZ = (int) (100 *(bufferPoints.get(102) + bufferPoints.get(106) + bufferPoints.get(110))) / 3;
+
+      message = "The value is " + avgX+ " / " + avgY + " / " + avgZ;
+
       TextView tv = (TextView) findViewById(R.id.distanceDisplay);
       tv.setText(message);
       pointCloudMINE.release();
