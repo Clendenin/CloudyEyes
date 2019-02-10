@@ -19,6 +19,8 @@ package com.google.ar.core.examples.java.helloar;
 //--------//
 import android.widget.TextView;
 import java.nio.*;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 //--------//
 
 import android.opengl.GLES20;
@@ -318,7 +320,7 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
       pointCloudRenderer.update(pointCloud);
       pointCloudRenderer.draw(viewmtx, projmtx);
 
-      //--------FIND VALUE--------// ------------------------------------------
+      //--------FIND VALUE--------// --------------------------------------------------------------------------------------------------
       Frame frameMINE = session.update();
       PointCloud pointCloudMINE = frameMINE.acquirePointCloud();
       FloatBuffer bufferPoints = pointCloudMINE.getPoints();
@@ -332,13 +334,20 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
       int avgX = (int) (100 *(bufferPoints.get(100) + bufferPoints.get(104) + bufferPoints.get(108))) / 3;
       int avgY = (int) (100 *(bufferPoints.get(101) + bufferPoints.get(105) + bufferPoints.get(109))) / 3;
       int avgZ = (int) (100 *(bufferPoints.get(102) + bufferPoints.get(106) + bufferPoints.get(110))) / 3;
+      int distance = -1 * (((avgX - 0)^2) + ((avgY - 0)^2) + (((avgZ - 0)^2)^(1/2)));
 
-      message = "The value is " + avgX+ " / " + avgY + " / " + avgZ;
+      message = "The value is " + avgX+ " / " + avgY + " / " + avgZ + "    DISTANCE: " + distance;
+      //message2 = "The distance is " + distance;
 
       TextView tv = (TextView) findViewById(R.id.distanceDisplay);
       tv.setText(message);
       pointCloudMINE.release();
 
+      if (distance > 300) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.pingis);
+        mediaPlayer.start();
+
+      }
 
       // Application is responsible for releasing the point cloud resources after
       // using it.
