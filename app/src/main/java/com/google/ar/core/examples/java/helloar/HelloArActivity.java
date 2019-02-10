@@ -21,6 +21,7 @@ import android.widget.TextView;
 import java.nio.*;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import java.util.*;
 //--------//
 
 import android.opengl.GLES20;
@@ -343,11 +344,14 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
       tv.setText(message);
       pointCloudMINE.release();
 
-      if (distance > 300) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.pingis);
+      if (distance < 300) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.beep);
         mediaPlayer.start();
-
       }
+//      try { Thread.sleep(5000); }
+//      catch (InterruptedException ex) { android.util.Log.d("YourApplicationName", ex.toString()); }
+
+      //java.util.concurrent.TimeUnit.SECONDS.sleep(2);
 
       // Application is responsible for releasing the point cloud resources after
       // using it.
