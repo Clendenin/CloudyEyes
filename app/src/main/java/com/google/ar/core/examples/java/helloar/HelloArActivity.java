@@ -322,14 +322,16 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
       Frame frameMINE = session.update();
       PointCloud pointCloudMINE = frameMINE.acquirePointCloud();
       FloatBuffer bufferPoints = pointCloudMINE.getPoints();
+
       //FloatBuffer bufferPoints = pointCloudMine.getPoints();
       long myValue = (long) bufferPoints.get(100);
       String message =
               myValue == -1 ?
                       "The value is invalid." :
-                      "The value is " + (int) bufferPoints.get(400);
+                      "The value is " + bufferPoints.get(100) + " / " + bufferPoints.get(101) + " / " + bufferPoints.get(102);
       TextView tv = (TextView) findViewById(R.id.distanceDisplay);
       tv.setText(message);
+      pointCloudMINE.release();
 
 
       // Application is responsible for releasing the point cloud resources after
